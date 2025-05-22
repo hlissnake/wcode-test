@@ -6,7 +6,7 @@ import { FormEvent, useCallback, useState } from "react";
 
 export default function Index() {
   // Use a custom hook to manage tasks, instead of using Reducer Context as its not a global state yet, just for demo testing
-  const { tasks, addTask, updateTaskActive, updateTaskTime } = useTasks();
+  const { tasks, addTask, updateTaskActive } = useTasks();
 
   const [taskName, setTaskName] = useState("");
 
@@ -58,7 +58,6 @@ export default function Index() {
                   <TaskComponent
                     task={task}
                     onUpdateActive={updateTaskActive}
-                    onUpdateTimeSpent={updateTaskTime}
                   />
                 </li>
               ))}

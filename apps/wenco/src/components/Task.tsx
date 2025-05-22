@@ -1,10 +1,9 @@
-import { useState, useEffect, useCallback } from "react";
+import { useCallback } from "react";
 import { Task } from "../types/Task";
 
 interface TaskProps {
   task: Task;
   onUpdateActive: (taskId: string, isActive: boolean) => void;
-  onUpdateTimeSpent: (taskId: string, timeSpent: number) => void;
 }
 
 function formatTime(timeInSeconds: number): string {
@@ -20,38 +19,37 @@ function formatTime(timeInSeconds: number): string {
 export const TaskComponent: React.FC<TaskProps> = ({
   task,
   onUpdateActive,
-  onUpdateTimeSpent,
 }) => {
-  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
-  const [timeSpent, setTimeSpent] = useState(task.timeSpent);
+  //   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
+  //   const [timeSpent, setTimeSpent] = useState(task.timeSpent);
 
   const handleToggleTimer = useCallback(() => {
-    if (task.isActive && timer) {
-      clearInterval(timer);
-      setTimer(null);
-    } else {
-      setTimer(
-        setInterval(() => {
-          setTimeSpent((prev) => prev + 1); // Update timeSpent every second (1000ms)
-        }, 1000)
-      );
-    }
+    // if (task.isActive && timer) {
+    //   clearInterval(timer);
+    //   setTimer(null);
+    // } else {
+    //   setTimer(
+    //     setInterval(() => {
+    //       setTimeSpent((prev) => prev + 1); // Update timeSpent every second (1000ms)
+    //     }, 1000)
+    //   );
+    // }
     onUpdateActive(task.id, !task.isActive);
-  }, [onUpdateActive, task, timer]);
+  }, [onUpdateActive, task]);
 
-  useEffect(() => {
-    if ((task.isActive, timeSpent)) {
-      onUpdateTimeSpent(task.id, timeSpent);
-    }
-  }, [onUpdateTimeSpent, task.id, task.isActive, timeSpent]);
+  //   useEffect(() => {
+  //     if ((task.isActive, timeSpent)) {
+  //       onUpdateTimeSpent(task.id, timeSpent);
+  //     }
+  //   }, [onUpdateTimeSpent, task.id, task.isActive, timeSpent]);
 
-  useEffect(() => {
-    return () => {
-      if (timer) {
-        clearInterval(timer);
-      }
-    };
-  }, [timer]);
+  //   useEffect(() => {
+  //     return () => {
+  //       if (timer) {
+  //         clearInterval(timer);
+  //       }
+  //     };
+  //   }, [timer]);
 
   return (
     <div className="task-container p-4 border rounded-lg shadow-lg my-4 flex justify-between">
@@ -62,7 +60,7 @@ export const TaskComponent: React.FC<TaskProps> = ({
             task.isActive ? "text-green-500" : "text-red-500"
           }`}
         >
-          Time Spent: {formatTime(timeSpent)}
+          Time Spent: {formatTime(task.timeSpent)}
         </span>
       </div>
 

@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 
-export function useSessionStorage<T>(key: string, initialValue?: T) {
+export function useSessionStorage<T>(key: string) {
   const [storedValue, setStoredValue] = useState<T | undefined>(() => {
-    if (typeof window === "undefined") return initialValue;
+    if (typeof window === "undefined") return undefined;
     try {
       const item = window.sessionStorage.getItem(key);
-      return item ? (JSON.parse(item) as T) : initialValue;
+      return item ? (JSON.parse(item) as T) : undefined;
     } catch (error) {
-      return initialValue;
+      return undefined;
     }
   });
 

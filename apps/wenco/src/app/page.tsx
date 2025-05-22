@@ -5,7 +5,8 @@ import { useTasks } from "@/hooks/useTasks";
 import { FormEvent, useCallback, useState } from "react";
 
 export default function Index() {
-  // Use a custom hook to manage tasks, instead of using Reducer Context as its not a global state yet, just for demo testing
+  // Use a custom hook to manage tasks,
+  // instead of using Reducer Context bcoz its not a global state yet, just for simple demo
   const { tasks, addTask, updateTaskActive } = useTasks();
 
   const [taskName, setTaskName] = useState("");

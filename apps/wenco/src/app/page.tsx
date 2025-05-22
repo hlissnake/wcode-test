@@ -1,50 +1,24 @@
 "use client";
 
 import TaskComponent from "@/components/Task";
+import { useTasks } from "@/hooks/useTasks";
 import { FormEvent, useCallback, useState } from "react";
 
 export default function Index() {
-  // Test data
-  const [tasks, setTasks] = useState([
-    {
-      id: "1",
-      name: "Complete project documentation",
-      timeSpent: 0,
-      isActive: false,
-    },
-    {
-      id: "2",
-      name: "Fix navigation bug",
-      timeSpent: 0,
-      isActive: false,
-    },
-  ]);
+  // Use a custom hook to manage tasks, instead of using Reducer Context as its not a global state yet, just for demo testing
+  const { tasks, addTask, updateTaskActive, updateTaskTime } = useTasks();
 
   const [taskName, setTaskName] = useState("");
-
-  const handleTaskUpdateActive = (taskId: string, isActive: boolean) => {
-    console.log("Task updated:", taskId, isActive);
-  };
-
-  const handleTaskUpdateTimeSpent = (taskId: string, timeSpent: number) => {
-    console.log("Task updated:", taskId, timeSpent);
-  };
 
   const handleFromSubmit = useCallback(
     (e: FormEvent) => {
       e.preventDefault();
       if (taskName) {
-        const newTask = {
-          id: Math.random().toString(36),
-          name: taskName,
-          timeSpent: 0,
-          isActive: false,
-        };
         setTaskName("");
-        setTasks((prev) => [...prev, newTask]);
+        addTask(taskName);
       }
     },
-    [taskName]
+    [addTask, taskName]
   );
 
   return (
@@ -59,7 +33,7 @@ export default function Index() {
           </div>
 
           <form
-            className="p-4 border rounded-lg shadow-sm my-4 flex justify-between"
+            className="p-4 rounded-md shadow-lg my-4 flex justify-between"
             onSubmit={handleFromSubmit}
           >
             <input
@@ -83,8 +57,8 @@ export default function Index() {
                 <li key={task.id}>
                   <TaskComponent
                     task={task}
-                    onUpdateActive={handleTaskUpdateActive}
-                    onUpdateTimeSpent={handleTaskUpdateTimeSpent}
+                    onUpdateActive={updateTaskActive}
+                    onUpdateTimeSpent={updateTaskTime}
                   />
                 </li>
               ))}

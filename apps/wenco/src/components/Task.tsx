@@ -20,9 +20,6 @@ export const TaskComponent: React.FC<TaskProps> = ({
   task,
   onUpdateActive,
 }) => {
-  //   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
-  //   const [timeSpent, setTimeSpent] = useState(task.timeSpent);
-
   const handleToggleTimer = useCallback(() => {
     // if (task.isActive && timer) {
     //   clearInterval(timer);
@@ -54,8 +51,11 @@ export const TaskComponent: React.FC<TaskProps> = ({
   return (
     <div className="task-container p-4 border rounded-lg shadow-lg my-4 flex justify-between">
       <div className="flex-col justify-between items-center">
-        <h3 className="text-lg">Name: {task.name}</h3>
+        <h3 className="text-lg" data-testid="task-name">
+          Name: {task.name}
+        </h3>
         <span
+          data-testid="task-time-spent"
           className={`time-display text-lg ${
             task.isActive ? "text-green-500" : "text-red-500"
           }`}
@@ -66,6 +66,7 @@ export const TaskComponent: React.FC<TaskProps> = ({
 
       <div className="controls flex gap-2 mt-3">
         <button
+          data-testid="task-button"
           onClick={handleToggleTimer}
           className={`px-4 py-2 rounded-md ${
             task.isActive

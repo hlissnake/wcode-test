@@ -39,11 +39,6 @@ export function useTasks() {
   // Initialize tasks loading
   useEffect(() => {
     // TODO: Calling get tasks API request or Using mock data
-    // fetch("test/tasks")
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     setTasks(data);
-    //   });
     if (isLoaded || sessionValue == null) return;
     setTasks(sessionValue);
     // If no task is active, don't activate the timer

@@ -1,13 +1,22 @@
 "use client";
 
 import TaskComponent from "@/components/Task";
-import { useTasks } from "@/hooks/useTasks";
+// import { useTasks } from "@/hooks/useTasks";
+import { useTaskTracker } from "@/hooks/useTaskTracker";
+import SessionStorageClient from "@/sdk/sessionStorageClient";
 import { FormEvent, useCallback, useState } from "react";
+
+const TASKS_SESSIONSTORAGE_KEY = "tasks_sessionstorage_key";
+// Storage Client by using SessionStorage,
+const sessionStorageClient = new SessionStorageClient(TASKS_SESSIONSTORAGE_KEY);
+
+// TODO: Client with API or Web Scoket
 
 export default function Index() {
   // Use a custom hook to manage tasks,
   // instead of using Reducer Context bcoz its not a global state yet, just for simple demo
-  const { tasks, addTask, updateTaskActive } = useTasks();
+  const { tasks, addTask, updateTaskActive } =
+    useTaskTracker(sessionStorageClient);
 
   const [taskName, setTaskName] = useState("");
 
@@ -28,8 +37,8 @@ export default function Index() {
         <div className="container">
           <div id="welcome">
             <h1>
-              <span> Hello Welcome, </span>
-              @wenco/Task Time Tracker 👋
+              <span> Hello @Wenco, </span>
+              Task Time Tracker 👋
             </h1>
           </div>
 

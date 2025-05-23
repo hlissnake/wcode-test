@@ -8,14 +8,14 @@ export function useTaskTracker(client: TaskStorageClient) {
 
   const addTask = useCallback(
     (name: string) => {
-      client.addTask(name);
+      client.addTask(name).then((tasks) => setTasks(tasks));
     },
     [client]
   );
 
   const updateTaskActive = useCallback(
     (id: string, isActive: boolean) => {
-      client.updateTaskActive(id, isActive);
+      client.updateTaskActive(id, isActive).then((tasks) => setTasks(tasks));
     },
     [client]
   );
@@ -23,7 +23,6 @@ export function useTaskTracker(client: TaskStorageClient) {
   // Initialize tasks loading
   useEffect(() => {
     client.init((tasks) => {
-      console.log("init", tasks);
       setTasks(tasks);
     });
   }, [client]);

@@ -38,7 +38,6 @@ export function useTasks() {
   const [isLoaded, setLoaded] = useState(false);
   // Initialize tasks loading
   useEffect(() => {
-    // TODO: Calling get tasks API request or Using mock data
     if (isLoaded || sessionValue == null) return;
     setTasks(sessionValue);
     // If no task is active, don't activate the timer
@@ -49,7 +48,6 @@ export function useTasks() {
 
   // Presist in SessionStorage
   useEffect(() => {
-    // TODO: calling task API request for adding, updating active, time spent
     setSessionValue(tasks);
   }, [setSessionValue, tasks]);
 

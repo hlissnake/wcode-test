@@ -25,10 +25,7 @@ export function useTaskTracker(client: TaskStorageClient) {
     client.init((tasks) => {
       setTasks(tasks);
     });
-  }, [client]);
 
-  // Central singleton timer controller, only one timer is active at a time
-  useEffect(() => {
     return () => {
       client.dispose();
     };

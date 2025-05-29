@@ -1,7 +1,7 @@
 import { Task } from "@/types/Task";
 import { TaskStorageClient } from "./TaskStorageClient";
 
-class SessionStorageClient extends TaskStorageClient {
+class LocalStorageClient extends TaskStorageClient {
   private key: string;
   private timer: NodeJS.Timer | undefined;
 
@@ -36,7 +36,7 @@ class SessionStorageClient extends TaskStorageClient {
 
   override async getTasks(isInit = false) {
     try {
-      const item = window.sessionStorage.getItem(this.key);
+      const item = window.localStorage.getItem(this.key);
       const tasks = item ? (JSON.parse(item) as Task[]) : [];
 
       // Time spent should be calculated based on the last updated time even if the web page is not loaded
@@ -62,7 +62,7 @@ class SessionStorageClient extends TaskStorageClient {
 
   async saveTasks(tasks: Task[]) {
     try {
-      window.sessionStorage.setItem(this.key, JSON.stringify(tasks));
+      window.localStorage.setItem(this.key, JSON.stringify(tasks));
     } catch (e) {
       console.error(e);
     }
@@ -70,7 +70,7 @@ class SessionStorageClient extends TaskStorageClient {
 
   saveLastUpdatedTime(time: number) {
     try {
-      window.sessionStorage.setItem(
+      window.localStorage.setItem(
         `${this.key}_LAST_UPDATED_TIME`,
         time.toString()
       );
@@ -81,7 +81,7 @@ class SessionStorageClient extends TaskStorageClient {
 
   getLastUpdatedTime(): number {
     try {
-      const item = window.sessionStorage.getItem(
+      const item = window.localStorage.getItem(
         `${this.key}_LAST_UPDATED_TIME`
       );
       return item ? parseInt(item) : Date.now();
@@ -117,4 +117,4 @@ class SessionStorageClient extends TaskStorageClient {
   }
 }
 
-export default SessionStorageClient;
+export default LocalStorageClient;
